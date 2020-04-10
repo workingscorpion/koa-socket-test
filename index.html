@@ -60,13 +60,14 @@
   <body>
     <button class="js-btn">Send</button>
     <button class="js-ack">
-      Send <span class="small">(with acknowledgement)</span>
-    </button>
+      Send <span class="small">(with acknowledgement)</span></button
+    ><br />
+    <input type="text" name="message" id="messageInput" />
     <button class="js-chatBtn">Chat</button>
     <div class="connections"><span class="js-connect">1</span></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.2/socket.io.slim.js"></script>
     <script>
-      var socket = io.connect("http://localhost:3000");
+      var socket = io.connect("http://localhost:45794/io");
 
       var btn = document.querySelector(".js-btn");
       btn.addEventListener("click", function (event) {
@@ -98,13 +99,14 @@
         console.log("response:", event.message);
       });
 
-      var chat = io.connect("http://localhost:3000/chat");
+      var chat = io.connect("http://localhost:45794/chat");
       chat.on("message", function (event) {
         console.log("chat message:", event);
       });
+      const messageInput = document.querySelector("#messageInput");
       var chatBtn = document.querySelector(".js-chatBtn");
       chatBtn.addEventListener("click", function (event) {
-        chat.emit("message", "Yo central, are you on the line?");
+        chat.emit("message", messageInput.value);
       });
     </script>
   </body>
